@@ -1,0 +1,2 @@
+<?php echo $__env->make("Layout::admin.app", \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
+<?php /**PATH D:\Download\Applicants Task-20240617T192257Z-001\Applicants Task\ubs-system\tours\resources\views/admin/layouts/app.blade.php ENDPATH**/ ?>

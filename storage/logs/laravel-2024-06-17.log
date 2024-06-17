@@ -1,0 +1,16 @@
+[2024-06-17 21:52:16] production.ERROR: Command "der" is not defined.
+
+Did you mean one of these?
+    make:provider
+    make:seeder {"exception":"[object] (Symfony\\Component\\Console\\Exception\\CommandNotFoundException(code: 0): Command \"der\" is not defined.
+
+Did you mean one of these?
+    make:provider
+    make:seeder at D:\\Download\\Applicants Task-20240617T192257Z-001\\Applicants Task\\ubs-system\\tours\\vendor\\symfony\\console\\Application.php:737)
+[stacktrace]
+#0 D:\\Download\\Applicants Task-20240617T192257Z-001\\Applicants Task\\ubs-system\\tours\\vendor\\symfony\\console\\Application.php(266): Symfony\\Component\\Console\\Application->find('der')
+#1 D:\\Download\\Applicants Task-20240617T192257Z-001\\Applicants Task\\ubs-system\\tours\\vendor\\symfony\\console\\Application.php(175): Symfony\\Component\\Console\\Application->doRun(Object(Symfony\\Component\\Console\\Input\\ArgvInput), Object(Symfony\\Component\\Console\\Output\\ConsoleOutput))
+#2 D:\\Download\\Applicants Task-20240617T192257Z-001\\Applicants Task\\ubs-system\\tours\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Console\\Kernel.php(201): Symfony\\Component\\Console\\Application->run(Object(Symfony\\Component\\Console\\Input\\ArgvInput), Object(Symfony\\Component\\Console\\Output\\ConsoleOutput))
+#3 D:\\Download\\Applicants Task-20240617T192257Z-001\\Applicants Task\\ubs-system\\tours\\artisan(40): Illuminate\\Foundation\\Console\\Kernel->handle(Object(Symfony\\Component\\Console\\Input\\ArgvInput), Object(Symfony\\Component\\Console\\Output\\ConsoleOutput))
+#4 {main}
+"} 
