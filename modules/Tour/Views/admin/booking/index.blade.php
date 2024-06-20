@@ -6,7 +6,7 @@
         <div class="d-flex justify-content-between mb20">
             <h1 class="title-bar">{{__("Tour Booking Calendar")}}</h1>
             <div class="col-right">
-                <a href="{{route('tour.admin.booking.index')}}" class="btn btn-info">{{__('Reset')}}</a>
+                <a href="{{route('tour.admin.booking.create')}}" class="btn btn-info">Add Booking</a>
         </div>
         </div>
         @include('admin.message')

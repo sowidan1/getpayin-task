@@ -3,17 +3,43 @@ namespace Modules\Tour\Admin;
 
 use Illuminate\Http\Request;
 use Modules\AdminController;
+use Modules\Core\Models\Attributes;
+use Modules\Location\Models\Location;
+use Modules\Location\Models\LocationCategory;
+use Modules\Tour\Models\Booking;
 use Modules\Tour\Models\Tour;
 use Modules\Tour\Models\TourCategory;
+use Modules\Tour\Models\TourTerm;
+use Modules\Tour\Models\TourTranslation;
+use Modules\Tour\Requests\BookingRequest;
 
 class BookingController extends AdminController
 {
+
     protected $tourClass;
+    protected $tourTranslationClass;
+    protected $tourCategoryClass;
+    protected $tourTermClass;
+    protected $attributesClass;
+    protected $locationClass;
+    /**
+     * @var string
+     */
+    private $locationCategoryClass;
+
     public function __construct()
     {
         $this->setActiveMenu(route('tour.admin.index'));
         $this->tourClass = Tour::class;
+        $this->tourTranslationClass = TourTranslation::class;
+        $this->tourCategoryClass = TourCategory::class;
+        $this->tourTermClass = TourTerm::class;
+        $this->attributesClass = Attributes::class;
+        $this->locationClass = Location::class;
+        $this->locationCategoryClass = LocationCategory::class;
     }
+
+
 
     public function index(Request $request){
 
@@ -82,4 +108,66 @@ class BookingController extends AdminController
         $d->modify('+ 4 hours');
         echo $d->format('Y-m-d H:i:s');
     }
+
+    public function create(Request $request)
+    {
+        $this->checkPermission('tour_create');
+        $row = new Tour();
+        $row->fill([
+            'status' => 'publish'
+        ]);
+        $data = [
+            'row'               => $row,
+            'tours'             => $this->tourClass::where('status', 'publish')->get(),
+            'attributes'        => $this->attributesClass::where('service', 'tour')->get(),
+            'tour_location'     => $this->locationClass::where('status', 'publish')->get()->toTree(),
+            'translation'       => new $this->tourTranslationClass(),
+            'breadcrumbs'       => [
+                [
+                    'name' => __('Tours'),
+                    'url'  => route('tour.admin.index')
+                ],
+                [
+                    'name'  => __('Add Tour'),
+                    'class' => 'active'
+                ],
+            ],
+            'page_title'        => __("Add booking"),
+        ];
+        return view('Tour::admin.booking.detail', $data);
+    }
+
+    public function store(BookingRequest $request){
+
+        $this->checkPermission('tour_create');
+
+        $data = $request->validated();
+
+        Booking::create([
+            'tour_id' => $data['tour_id'],
+            'date' => $data['date'],
+            'adults' => $data['adults'],
+            'children' => $data['children'],
+            'clean' => $data['clean'] ? true : false,
+            'breakfast' => $data['breakfast'] ? true : false,
+            'fees' => Booking::FEES,
+            'total_price' => $data['total_price'],
+            'status' => Booking::STATUS_PENDING,
+            'first_name' => $data['first_name'],
+            'last_name' => $data['last_name'],
+            'email' => $data['email'],
+            'phone' => $data['phone'],
+            'address_line_1' => $data['address_line_1'],
+            'address_line_2' => $data['address_line_2'],
+            'country' => $data['country'],
+            'city' => $data['city'],
+            'state' => $data['state'],
+            'zip' => $data['zip'],
+            'special_requirements' => $data['special_requirements'],
+
+        ]);
+
+        return redirect()->route('tour.admin.booking.index')->with('success',__('Booking has been created successfully'));
+    }
+
 }

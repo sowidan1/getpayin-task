@@ -37,4 +37,8 @@ Route::group(['prefix'=>'availability'],function(){
 });
 
 
-Route::get('/booking','BookingController@index')->name('tour.admin.booking.index');
+Route::group(['prefix'=>'booking'],function(){
+    Route::get('/','BookingController@index')->name('tour.admin.booking.index');
+    Route::get('/create','BookingController@create')->name('tour.admin.booking.create');
+    Route::post('/store','BookingController@store')->name('tour.admin.booking.store');
+});
